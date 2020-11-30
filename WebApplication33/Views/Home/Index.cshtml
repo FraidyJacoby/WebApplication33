@@ -1,0 +1,21 @@
+﻿@model HomePageViewModel
+
+<div class="row">
+
+    @foreach(Ad ad in Model.Ads)
+    {
+        <div class="col-md-6 col-md-offset-6 well" style="margin-top:30px;">
+            <h2>@ad.Title</h2>
+            <h5>@ad.PhoneNumber</h5>
+            <h4>@ad.Description</h4>
+            @if (Model.UserIsLoggedIn && Model.UserId == ad.UserId)
+            {
+                <br />
+                <form method="post" action="/home/deletead">
+                    <input type="hidden" name="id" value="@ad.Id"/>
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            }
+        </div>
+    }
+</div>

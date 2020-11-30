@@ -1,0 +1,16 @@
+﻿@model MyAccountViewModel
+
+<div class="row" style="margin-top:40px;">
+    @foreach(Ad ad in Model.MyAds)
+    {
+    <div class="col-md-6 col-md-offset-6 well" style="margin-bottom:10px;">
+        <h2>@ad.Title</h2>
+        <h5>@ad.PhoneNumber</h5>
+        <br />
+            <form method="post" action="/home/deletead">
+                <input type="hidden" name="id" value="@ad.Id" />
+                <button class="btn btn-danger">Delete</button>
+            </form>
+    </div>
+    }
+</div>
