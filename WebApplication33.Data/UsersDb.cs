@@ -70,14 +70,12 @@ namespace WebApplication33.Data
         public User LogIn(string email, string password)
         {
             var user = GetByEmail(email);
-            if (BCrypt.Net.BCrypt.HashPassword(password) == user.PasswordHash)
-            {
-                return user;
-            }
-            else
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
                 return null;
             }
+            
+            return user;
         }
 
         public List<Ad> GetAdsById(int userId)
@@ -139,7 +137,7 @@ namespace WebApplication33.Data
                 {
                     Id = (int)reader["Id"],
                     Name = (string)reader["Name"],
-                    Email = email,
+                    Email = (string)reader["Email"],
                     PasswordHash = (string)reader["PasswordHash"]
                 };
             }

@@ -23,15 +23,19 @@ namespace WebApplication33.Controllers
         public IActionResult LogIn(string email, string password)
         {
             var db = new UsersDb(_connectionString);
-            db.LogIn(email, password);
-
-            var claims = new List<Claim>
+            var user = db.LogIn(email, password);
+            if(user != null)
+            {
+                var claims = new List<Claim>
             {
                 new Claim("user", email)
             };
 
-            HttpContext.SignInAsync(new ClaimsPrincipal(
-                new ClaimsIdentity(claims, "Cookies", "user", "role"))).Wait();
+                HttpContext.SignInAsync(new ClaimsPrincipal(
+                    new ClaimsIdentity(claims, "Cookies", "user", "role"))).Wait();
+
+            }
+            
 
             return Redirect("/");
         }
